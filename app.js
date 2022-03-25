@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 var express = require("express");
 const app = express();
-const users = require("./routes/users");
+const users = require("./routes/user");
 const courses = require("./routes/courses");
 const lessondata = require("./routes/lessondata");
 const lessons = require("./routes/lessons");
@@ -15,7 +15,7 @@ mongoose
   });
 
 app.use(express.json());
-app.use("/users", users);
+app.use("/user", users);
 app.use("/courses", courses);
 app.use("/lessondata", lessondata);
 app.use("/lessons", lessons);
