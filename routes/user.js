@@ -1,31 +1,53 @@
 var express = require("express");
 var router = express.Router();
-var User = require('../models/User');
-var Course = require('../models/Course');
+var User = require("../models/User");
 
-
-/* GET users listing. */
-router.get("/", async (req, res, next) => {
-  res.send("User GET");
-  // Get list of all their courses
-
-  // Req.params.body includes the userId
-  
-  
-  const getUserCourses = await User.findById(req.params.body).courses;
-
-  console.log(getUserCourses);
-
+//Get All Users
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-// Adding a Course
-router.put("/:", async (req, res, next) => {
-  console.log("User PUT");
+//Add User
+router.post("/", async (req, res) => {
+  const newUser = new User(req.body);
 
-  const newCourse = await Course.create(req.params.body);
-  const getUser = await User.findById(req.params)
+  try {
+    const savedUser = await newUser.save();
+    res.status(200).json(savedUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
+//Update User
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
+//Delete User
+router.delete("/:id", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("User has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
