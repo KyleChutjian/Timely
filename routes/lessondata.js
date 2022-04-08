@@ -1,11 +1,11 @@
 var express = require("express");
 var router = express.Router();
-var LessonData = require("../models/Entry");
+var Entry = require("../models/Course");
 //Get All LessonDatas
 router.get("/", async (req, res) => {
   try {
-    const lessondata = await LessonData.find();
-    res.status(200).json(lessondata);
+    const entry = await Entry.find();
+    res.status(200).json(entry);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -13,11 +13,11 @@ router.get("/", async (req, res) => {
 
 //Add LessonData
 router.post("/", async (req, res) => {
-  const newLessonData = new LessonData(req.body);
+  const newEntry = new Entry(req.body);
 
   try {
-    const savedLessonData = await newLessonData.save();
-    res.status(200).json(savedLessonData);
+    const savedEntry = await newEntry.save();
+    res.status(200).json(savedEntry);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -26,14 +26,14 @@ router.post("/", async (req, res) => {
 //Update LessonData
 router.put("/:id", async (req, res) => {
   try {
-    const updatedLessonData = await LessonData.findByIdAndUpdate(
+    const updatedEntry = await Entry.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
       },
       { new: true }
     );
-    res.status(200).json(updatedLessonData);
+    res.status(200).json(updatedEntry);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -42,8 +42,8 @@ router.put("/:id", async (req, res) => {
 //Delete LessonData
 router.delete("/:id", async (req, res) => {
   try {
-    await LessonData.findByIdAndDelete(req.params.id);
-    res.status(200).json("LessonData has been deleted...");
+    await Entry.findByIdAndDelete(req.params.id);
+    res.status(200).json("Entry has been deleted...");
   } catch (err) {
     res.status(500).json(err);
   }

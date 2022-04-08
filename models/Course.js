@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Entry = require("../models/Entry.js");
 
 var entrySchema = new mongoose.Schema({
   lessonId: {type: Number, required: true},
@@ -22,6 +21,7 @@ const courseSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Course", courseSchema);
+module.exports = mongoose.model("Entry", entrySchema);
 
 
 /*
