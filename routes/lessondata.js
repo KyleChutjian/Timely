@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var LessonData = require("../models/LessonData");
+var LessonData = require("../models/Entry");
 //Get All LessonDatas
 router.get("/", async (req, res) => {
   try {
