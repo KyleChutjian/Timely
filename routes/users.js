@@ -98,23 +98,23 @@ router.delete("/courses/:courseId", async (req, res) => {
 });
 
 // Get all Entries
-router.get("/entry", async(req, res) => {
-    try {
-        const entry = await Entry.find();
-        res.status(200).json(entry);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-})
+// router.get("/entry", async(req, res) => {
+//     try {
+//         const entry = await Entry.find();
+//         res.status(200).json(entry);
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// })
 
 // Get all UserCourse Entries
-router.get("/testing", async (req,res) => {
+router.get("/userCourses", async (req,res) => {
     const userCourses = await UserCourse.find({});
     res.status(200).json(userCourses);
 })
 
 // Delete UserCourse by CourseId
-router.delete("/testing/:userCourseId", async(req, res) => {
+router.delete("/userCourses/:userCourseId", async(req, res) => {
     try {
         await UserCourse.findByIdAndDelete(req.params.userCourseId);
         res.status(200).json("UserCourse has been deleted.");
