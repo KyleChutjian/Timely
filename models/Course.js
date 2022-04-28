@@ -5,8 +5,7 @@ const entrySchema = new mongoose.Schema({
   projectId: {type: Number, required: true},
   homeworkId: {type: Number, required: true},
   studyId: {type: Number, required: true},
-  courseCode: {type: String, required: true},
-  userEmail: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Users"},
+  userId: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Users"},
 });
 
 const courseSchema = new mongoose.Schema({

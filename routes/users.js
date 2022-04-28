@@ -17,6 +17,17 @@ router.get("/", async (req, res) => {
     }
 });
 
+// Get a User by Id
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.status(200).json(user);
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 // Create a new user
 router.post("/", async (req, res) => {
     const newUser = new User(req.body);
@@ -98,14 +109,76 @@ router.delete("/courses/:courseId", async (req, res) => {
 });
 
 // Get all Entries
-// router.get("/entry", async(req, res) => {
+router.get("/courses/:courseId/entry", async(req, res) => {
+    console.log(`Getting entries in the course with id ${req.params.courseId}`);
+    try {
+        const currentCourse = await Course.findById(req.params.courseId);
+        console.log(currentCourse.name);
+        const entries = currentCourse.entry;
+        console.log(entries);
+        res.status(200).json(entries);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+// Create an Entry
+// router.post("/courses/:courseId/entry", async(req, res) => {
 //     try {
-//         const entry = await Entry.find();
-//         res.status(200).json(entry);
+//         const newEntry = new Entry(req.body);
+//         const course = await Course.findById(req.params.courseId);
+//         course.entry.push(newEntry);
+//         const savedCourse = course.save();
+//         res.status(200).json(savedCourse.entry);
 //     } catch (err) {
 //         res.status(500).json(err);
 //     }
 // })
+
+// Update an Entry by Id
+router.put("/courses/:courseId/entry/:entryId", async(req, res) => {
+    console.log("------------------");
+    try {
+        const course = await Course.findById(req.params.courseId);
+        let index = req.params.entryId;
+        index--;
+        console.log(index);
+        console.log(course.entry[index]);
+        course.entry[index].projectId = req.body.projectId;
+        course.entry[index].homeworkId = req.body.homeworkId;
+        course.entry[index].studyId = req.body.studyId;
+        console.log(course.entry[index]);
+
+        // console.log(course.entry[req.params.entryId]);
+        // course.entry[req.params.entryId] = req.body;
+        console.log(course.entry[req.params.entryId]);
+        await course.save();
+        res.status(200).json(`Lesson #${req.params.entryId} has been updated.`);
+
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+
+// Delete an Entry by Id
+
+// Delete All Entries in a course
+router.delete("/courses/:courseId/entry", async (req,res) => {
+    try {
+        const course = await Course.findById(req.params.courseId);
+        for (let i = course.entry.length-1; i >= 0; i--) {
+            await course.entry[i].remove();
+        }
+
+        await course.save();
+        res.status(200).json(`The entries in ${course.name} have been deleted.`);
+
+    } catch (err) {
+        res.status(500);
+    }
+});
 
 // Get all UserCourse Entries
 router.get("/userCourses", async (req,res) => {
@@ -140,8 +213,22 @@ router.get("/enroll/:userId", async (req, res) => {
 // Enroll in a Course
 router.post("/enroll/:userId/:courseId", async (req, res) => {
     const user = await User.findById(req.params.userId);
-    // const newEntry = new Entry(req.body);
-    // newEntry.userEmail = user.email;
+    const course = await Course.findById(req.params.courseId);
+    // console.log(`UserId: ${req.params.userId}`);
+    // console.log(`CourseId: ${req.params.courseId}`);
+    for (let i = 1; i <= 40; i++) { // change to 40 later
+        // console.log("Entry #" + i);
+        const currentEntry = new Entry({
+            lessonId: i,
+            projectId: 0,
+            homeworkId: 0,
+            studyId: 0,
+            userId: req.params.userId // user.email?
+        });
+        course.entry.push(currentEntry);
+        
+    }
+    course.save();
     const newUserCourse = await new UserCourse({
         userId: req.params.userId,
         courseId: req.params.courseId,
