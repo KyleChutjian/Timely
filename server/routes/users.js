@@ -7,6 +7,8 @@ const Course = CoursesEntry.Course;
 const Entry = CoursesEntry.Entry;
 const UserCourse = UserCourse1.UserCourse;
 
+const Axios = require("axios");
+
 // Get All Users
 router.get("/", async (req, res) => {
     try {
@@ -18,6 +20,7 @@ router.get("/", async (req, res) => {
 });
 
 // Create a new user
+
 router.post("/", async (req, res) => {
     const newUser = new User(req.body);
     try {

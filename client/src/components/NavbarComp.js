@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Modal from './modal/Modal';
 import {Navbar, Container, Nav, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
 import Home from '../pages/css/home.css';
 function NavbarComp() {
+
+    const [openModal, setOpenModal] = useState(false);
+
   return (
     <div>
         <Nav className="navbar navbar-expand-lg navbar-light bg-light navigation">
@@ -15,13 +19,19 @@ function NavbarComp() {
                     <Nav.Item as="li">
                         <a className="nav-link" href="about.html">About</a>
                     </Nav.Item>
-                    <div className="navbar-nav align-items-end">
-                    <a href="#myModal" class="cardLink" data-bs-toggle="modal" data-bs-target="#myModal" >
-                        <button type="button" class="btn btn-primary" href="home.html">
-                            Sign Up
+                    <Nav.Item as="li">
+                        <button type="button" className="btn btn-primary"
+                   
+                        
+                            >
+                            Sign up
                         </button>
-                    </a>
-                </div>
+                        {openModal && <Modal />}
+                      
+                        {/* {openModal && <Modal  />} */}
+
+                    </Nav.Item>
+                
                   
                 </Nav>
        
