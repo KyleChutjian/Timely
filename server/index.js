@@ -1,14 +1,24 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const app = express();
-const router = express.Router();
-var users = require("./routes/users")
-const User = require("./models/User");
-const CoursesEntry = require("./models/Course");
-const UserCourse1 = require("./models/UserCourse");
+const jwt = require('jsonwebtoken');
+
+const cors = require("cors");
+
+var users = require("./routes/users");
+var auth = require("./routes/auth")
+const bcrypt = require('bcrypt');
 
 //middlewares
+
 app.use(express.json());
+app.use(cors());
+
+
+
+
 
 mongoose.connect("mongodb+srv://fawaks15:Wizard51!@ecommerce.nfjwb.mongodb.net/TimelyApp?retryWrites=true&w=majority", 
 {
@@ -16,19 +26,10 @@ mongoose.connect("mongodb+srv://fawaks15:Wizard51!@ecommerce.nfjwb.mongodb.net/T
 }
 );
 app.use("/",users);
+app.use("/auth",auth);
 
 
-// app.get("/", async(req,res)=>{
-//     try {
-//         const users = await User.find();
-//         res.status(200).json(users);
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// });
-
-
-
+    
 
 app.listen(5001, ()=>{
     console.log('server running on port 5001...');

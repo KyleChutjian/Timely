@@ -1,10 +1,23 @@
-import React from 'react';
 
+import React, {useState ,useEffect} from 'react';
+import {Navbar, Container, Nav, NavDropdown, Form, FormControl, Button, Modal} from 'react-bootstrap';
+import HomeCss from '../pages/css/home.css';
+import useScript from '../hooks/useScript';
+import Joi from "joi-browser";
+import { useDispatch, useSelector } from "react-redux";
 
+const Home = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
 
-function Home() {
-
+  const handleClick = (e) => {
+    e.preventDefault();
+    Home(dispatch, { username, password });
+  };
   return (
+
     <div className="container-lg justify-content-center mainContainer d-block">
     <div className="row text-center ">
     <div className="col-lg-12">
@@ -28,16 +41,34 @@ function Home() {
     <div className="card-body">
     <div className="tab-content text-center">
     <div className="tab-pane active" id="Student">
-    <h4 className="logInToStartText">Welcome <strong>Student</strong>, Log In To Get Started</h4>
-    <form>
-      <input type="text" placeholder="Name..."/>
-      <input type="text" placeholder="email@gmail.com"/>
-      <input type="text" placeholder="Password123"/>
-      <input type="submit"/>
+    <h4 className="logInToStartText">Welcome, Log In To Get Started</h4>
+    <form className='logInForm'>
+      <div className='col-lg-12'>
+        <div className='row-4'>
+      <input className="emailInput" type="text" placeholder="Quinnipiac E-Mail" 
+    
+      />
+      </div>
+      <div className='row-4'>
+      <input className="passInput" type="text" placeholder="Password" 
+    
+      />
+      <Form>
+  <Form.Check 
+    type="switch"
+    id="custom-switch"
+    label="Check this switch if you are a professor"
+  />
+</Form>
+      </div>
+      <div className='row-4'>
+      <Button className="loginBtn" variant="secondary">
+            Log In
+          </Button>
+          </div>
+          
+      </div>
     </form>
-    <div class="tab-pane" id="Admin">
-                    <h4 class="logInToStartText">Welcome <strong>Professor</strong>, Log In To Get Started</h4>
-                    </div>
     </div>
     </div>
     </div>
@@ -46,6 +77,7 @@ function Home() {
     </div>
     </div>
   )
-}
+};
 
-export default Home
+
+export default Home;

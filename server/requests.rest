@@ -1,0 +1,11 @@
+GET http://localhost:5001/posts
+
+###
+
+POST http://localhost:5001/login
+Content-Type: application/json
+
+{
+    "username": "Nico"
+}
+

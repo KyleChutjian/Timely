@@ -57,13 +57,28 @@ body{
 .nav-tabs-navigation{
     background-color: rgb(58, 58, 58);
 }
-.nav-link {
-    color: grey !important;
-}
 
-.studentPill:not(.active), .adminPill:not(.active){
+
+.studentPill:not(.active), .adminPill:not(.active) {
     background-color: rgb(58, 58, 58);
     color: white;
+}
+.card-header:first-child {
+    background-color: rgb(58, 58, 58);
+}
+.btn1{
+    width: 100%;
+    margin-top: 2%;
+    padding: 2%;
+}
+.form-group{
+    padding: 2%;
+}
+.emailInput, .passInput, .loginBtn{
+    width: 100%;
+    margin-bottom: 2%;
+    height: 40px;
+    border-radius: 10px;
 }
 
 /* adjusts classes for smaller screens :) */
