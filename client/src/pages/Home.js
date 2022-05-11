@@ -4,18 +4,13 @@ import {Navbar, Container, Nav, NavDropdown, Form, FormControl, Button, Modal} f
 import HomeCss from '../pages/css/home.css';
 import useScript from '../hooks/useScript';
 import Joi from "joi-browser";
+
 import { useDispatch, useSelector } from "react-redux";
 
-const Home = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
+function Home () {
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    Home(dispatch, { username, password });
-  };
+  const [username, setUsername] = useState("");
+
   return (
 
     <div className="container-lg justify-content-center mainContainer d-block">
