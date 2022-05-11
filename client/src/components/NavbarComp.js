@@ -82,7 +82,7 @@ function NavbarComp() {
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" class="justify-content-end" id="navbarScroll">
+                <div className="collapse navbar-collapse justify-content-end" id="navbarScroll">
                 <Nav  as="ul">
                     <Nav.Item as="li">
                         <a className="nav-link" href="about.html">About</a>
@@ -101,20 +101,7 @@ function NavbarComp() {
         <Modal.Body>
           <form className="formModal" action="" method="" onSubmit={(e)=>handleSubmit(e)}>
                <div className="row">
-                 <div className="col-6">
-                  <div className="form-group">
-                    <label>First Name:</label>
-                    <input type="text" className="form-control" id="firstName" placeholder="First Name" required/>
-                    <div className="invalid-feedback">Enter a valid Name.</div>
-                  </div>
-                 </div>
-                <div className="col-6">
-                  <div className="form-group">
-                    <label>Last Name:</label>
-                    <input type="text" className="form-control" id="lastName" placeholder="Last Name" required/>
-                    <div className="invalid-feedback">Enter a valid Name.</div>
-                  </div>
-                </div>
+
                </div>
                  <div className="form-group">
                      <label>Quinnipiac Email:</label>
