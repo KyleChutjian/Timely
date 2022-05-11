@@ -4,12 +4,15 @@ import {Navbar, Container, Nav, NavDropdown, Form, FormControl, Button, Modal} f
 import HomeCss from '../pages/css/home.css';
 import useScript from '../hooks/useScript';
 import Joi from "joi-browser";
+import { login } from '../service/authService';
 
 import { useDispatch, useSelector } from "react-redux";
 
 function Home () {
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [pswd, setPswd] = useState("");
+  const [isProf, setIsProf] = useState("");
 
   return (
 
