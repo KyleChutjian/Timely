@@ -4,6 +4,8 @@ import { faCheck, faTimes, faInfoCircle} from "@fortawesome/free-solid-svg-icons
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Home from '../pages/css/home.css';
 import axios from 'axios';
+import { signup } from '../service/userService';
+
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -58,21 +60,27 @@ function NavbarComp() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [values,setValues] = useState({
-      email:"",
-      password:"",
+    const [account, setAccount] = useState({
+      email: "",
+      password: "",
+      isFaculty: false,
     });
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try{
-        const {data} = await axios.post("http://localhost:5001/register",{
-          ...values,
-        });
-      } catch(err){
-        console.log(err);
-      }
-    };
+    function handleChange(e) {
+      const { name, value } = e.target;
+      setAccount((prev) => {
+          return {
+            ...prev,
+            [name]: value,
+          };
+      })
+  };
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    signup(account)
   
+    .catch((err) => console.log(err));
+};
 
   return (
     <div>
@@ -106,18 +114,14 @@ function NavbarComp() {
                  <div className="form-group">
                      <label>Quinnipiac Email:</label>
                      <input type="text" className="form-control" id="username" placeholder="Enter Quinnipiac Email" required
-                     onChange={(e)=>
-                      setValues({...values, [e.target.name]: e.target.value })
-                      }
+                 
                      />
                      <div className="invalid-feedback">Enter a valid Username.</div>
                  </div>
                  <div className="form-group">
                      <label>Password:</label>
                      <input type="password" className="form-control" id="password" placeholder="Enter Password" required
-                     onChange={(e)=>
-                      setValues({...values, [e.target.name]: e.target.value })
-                      }
+                     name='password' onChange={handleChange}
                      />
                      <div className="invalid-feedback">Enter a valid Password.</div>
                  </div>

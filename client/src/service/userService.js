@@ -6,9 +6,10 @@ export function login(data) {
     return http.post(`${apiEndpoint}/login`, data);
   }
 
-  export function register(user) {
-      return http.post(apiEndpoint, {
+  export function signup(user) {
+      return http.post(`${apiEndpoint}/register`, {
           email: user.email,
           password: user.password
       });
   }
+
