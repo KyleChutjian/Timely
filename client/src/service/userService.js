@@ -9,7 +9,8 @@ export function login(data) {
   export function signup(user) {
       return http.post(`${apiEndpoint}/register`, {
           email: user.email,
-          password: user.password
+          password: user.password,
+          isProfessor: false,
       });
   }
 

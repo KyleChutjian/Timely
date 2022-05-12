@@ -63,9 +63,10 @@ function NavbarComp() {
     const [account, setAccount] = useState({
       email: "",
       password: "",
-      isFaculty: false,
+      isProfessor: false,
     });
     function handleChange(e) {
+      console.log(e.currentTarget.value);
       const { name, value } = e.target;
       setAccount((prev) => {
           return {
@@ -76,8 +77,12 @@ function NavbarComp() {
   };
   function handleSubmit(e) {
     e.preventDefault();
-
+    console.log(account);
     signup(account)
+    .then((res) => {
+      //update the route
+      console.log(JSON.stringify(res));
+  })
   
     .catch((err) => console.log(err));
 };
@@ -113,7 +118,7 @@ function NavbarComp() {
                </div>
                  <div className="form-group">
                      <label>Quinnipiac Email:</label>
-                     <input type="text" className="form-control" id="username" placeholder="Enter Quinnipiac Email" required
+                     <input type="text" className="form-control" id="username" placeholder="Enter Quinnipiac Email" required name="email" onChange={handleChange}
                  
                      />
                      <div className="invalid-feedback">Enter a valid Username.</div>
@@ -127,16 +132,16 @@ function NavbarComp() {
                  </div>
                  <div className="form-group">
                   <label>Confirm Password:</label>
-                  <input type="password" className="form-control" id="passwordConfirm" placeholder="Confirm Password" required/>
+                  <input type="password" className="form-control" id="passwordConfirm" placeholder="Confirm Password" required name="password" onChange={handleChange}/>
                   <div className="invalid-feedback">Password Doesn't Match.</div>
               </div>
-                 <button type="button" className="btn1 btn-primary btn-block" data-bs-dismiss="modal">Sign Up</button>
+                 <button type="submit" className="btn1 btn-primary btn-block" data-bs-dismiss="modal">Sign Up</button>
              </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <button variant="secondary" onClick={handleClose}>
             Cancel
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
         
