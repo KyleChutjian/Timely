@@ -14,12 +14,12 @@ function App() {
       
       <Router>
         <NavbarComp />
-        {/* SWITCH ROUTES */}
+       
         <Routes> 
           <Route path="/" exact element={<Home />} />
           <Route path="/dash" exact element={<DashboardComp />} />
         </Routes>
-        {/* END SWITCH */}
+        
       </Router>
      </div>
   );

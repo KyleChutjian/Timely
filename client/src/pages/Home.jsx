@@ -9,11 +9,35 @@ import { login } from '../service/authService';
 import { useDispatch, useSelector } from "react-redux";
 
 function Home () {
+ 
 
-  const [email, setEmail] = useState("");
-  const [pswd, setPswd] = useState("");
-  const [isProf, setIsProf] = useState("");
+  const [LoginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+  function handleSubmit(e) {
+    e.preventDefault();
 
+    console.log(LoginInfo);
+    login(LoginInfo)
+    .then((res) => {
+        //update the route
+        console.log(JSON.stringify(res));
+    })
+    .catch((err) => console.log(err));
+};
+function handleChange(e) {
+  console.log(e.currentTarget.value);
+  const { name, value } = e.target;
+  setLoginInfo((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+  })
+};
+
+  
   return (
 
     <div className="container-lg justify-content-center mainContainer d-block">
@@ -26,43 +50,26 @@ function Home () {
     <div className="row rowWithCard">
     <div className="col-lg-12 justify-content-center">
     <div className="card card-plain">
-    <div className=" card-header nav-tabs-navigation">
-    <ul className="nav nav-pills nav-justified" data-tabs="tabs">
-                              <li className="nav-item">
-                                  <a className="nav-link active studentPill" href="#Student" data-toggle="tab">Student</a>
-                              </li>
-                              <li className="nav-item">
-                                  <a className="nav-link adminPill" href="#Admin" data-toggle="tab">Professor</a>
-                              </li>
-                          </ul>
-    </div>
+   
     <div className="card-body">
     <div className="tab-content text-center">
     <div className="tab-pane active" id="Student">
     <h4 className="logInToStartText">Welcome, Log In To Get Started</h4>
-    <form className='logInForm'>
+    <form className='logInForm' onSubmit={handleSubmit}>
       <div className='col-lg-12'>
         <div className='row-4'>
-      <input className="emailInput" type="text" placeholder="Quinnipiac E-Mail" 
+      <input className="emailInput" type="text" placeholder="Quinnipiac E-Mail" name="email" onChange={handleChange} 
     
       />
       </div>
       <div className='row-4'>
-      <input className="passInput" type="text" placeholder="Password" 
+      <input className="passInput" type="text" placeholder="Password" name="password" onChange={handleChange}
     
       />
-      <Form>
-  <Form.Check 
-    type="switch"
-    id="custom-switch"
-    label="Check this switch if you are a professor"
-  />
-</Form>
+   
       </div>
       <div className='row-4'>
-      <Button className="loginBtn" variant="secondary">
-            Log In
-          </Button>
+      <button type='submit' className='btn btn-primary'>Login</button>
           </div>
           
       </div>
