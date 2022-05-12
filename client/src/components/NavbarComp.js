@@ -4,7 +4,11 @@ import { faCheck, faTimes, faInfoCircle} from "@fortawesome/free-solid-svg-icons
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Home from '../pages/css/home.css';
 import axios from 'axios';
-import { signup } from '../service/userService';
+import { Link } from "react-router-dom";
+
+import { signup, getAllCourses} from '../service/userService';
+
+import { useNavigate } from "react-router-dom";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -13,47 +17,46 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 
 function NavbarComp() {
-    // const userRef = useRef();
-    // const errRef = useRef();
+  // let coursesArray = [];
+  // const [courses, setCourses] = useState([]);
+  // const fetchCourses = async () => {
+  //   const data = await getAllCourses();
+  //   //console.log(data.data[0].name);
+    
+  //   // console.log(data.data[0].name);
+  //   for (const course in data.data) {
+  //     //console.log(data.data[course]);
+  //     coursesArray.push(data.data[course].name);
+      
+  //   }
+  //   return coursesArray.map((course,index) => {
+  //     return <li><input type="checkbox" checked="false"/> {coursesArray[index]}</li>
+  //   })
+  //   //console.log(coursesArray);
+    
+  //   //return coursesArray;
+  // }
 
-    // const [user,setUser] = useState('');
-    // const [validName, setValidName] = useState(false);
-    // const [userFocus, setUserFocus] = useState(false);
+  const [courses, setCourses] = useState([]);
 
-    // const [pwd, setPwd] = useState('');
-    // const [validPwd, setValidPwd] = useState(false);
-    // const [pwdFocus, setPwdFocus] = useState(false);
+  useEffect(() => {
+      getAllCourses().then((res) => {
+        const data = res.data;
+        setCourses(data);
+      });
+ 
+  }, []);
+  console.log(courses);
 
-    // const [matchPwd, setMatchPwd] = useState('');
-    // const [validMatch, setValidMatch] = useState(false);
-    // const [matchFocus, setMatchFocus] = useState(false);
 
-    // const [errMsg, setErrMsg] = useState('');
-    // const [success, setSuccess] = useState(false);
 
-    // useEffect(()=> {
-    //   userRef.current.focus();
-    // },[])
 
-    // useEffect(()=> {
-    //   const result = USER_REGEX.test(user);
-    //   console.log(result);
-    //   console.log(user);
-    //   setValidName(result);
-    // }, [user])
 
-    // useEffect(() =>{
-    //   const result = PWD_REGEX.test(pwd);
-    //   console.log(result);
-    //   console.log(pwd);
-    //   setValidPwd(result);
-    //   const match = pwd === matchPwd;
-    //   setValidMatch(match);
-    // }, [pwd, matchPwd])
 
-    // useEffect(()=>{
-    //   setErrMsg('');
-    // },[user,pwd,matchPwd])
+
+ 
+  
+  const navigator = useNavigate();
 
     const [show, setShow] = useState(false);
 
@@ -82,23 +85,29 @@ function NavbarComp() {
     .then((res) => {
       //update the route
       console.log(JSON.stringify(res));
+      navigator("/");
+      handleClose();
   })
   
     .catch((err) => console.log(err));
 };
 
+
+
   return (
     <div>
         <Nav className="navbar navbar-expand-lg navbar-light bg-light navigation">
             <div className="container-fluid">
+            <Link to="/dashStudent">
                 <a className="navbar-brand" href="home.html" id="logo">Timely</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
+                </Link>
                 <div className="collapse navbar-collapse justify-content-end" id="navbarScroll">
                 <Nav  as="ul">
                     <Nav.Item as="li">
-                        <a className="nav-link" href="about.html">About</a>
+                        <a className="nav-link" href="/">Home</a>
                     </Nav.Item>
                     <Nav.Item as="li">
                         <button type="button" className="btn btn-primary" onClick={handleShow}
@@ -134,6 +143,25 @@ function NavbarComp() {
                   <label>Confirm Password:</label>
                   <input type="password" className="form-control" id="passwordConfirm" placeholder="Confirm Password" required name="password" onChange={handleChange}/>
                   <div className="invalid-feedback">Password Doesn't Match.</div>
+                  <div className="dropdown-check-list" tabIndex="100">
+  <span className="anchor">Select Courses</span>
+  <div id="list1">
+  <ul className="items">
+    <li><input type="checkbox" />SER-320 </li>
+    <li><input type="checkbox" />ENR-110</li>
+    <li><input type="checkbox" />SER-330 </li>
+    <li><input type="checkbox" />ENR-210 </li>
+    <li><input type="checkbox" />SER-210 </li>
+    <li><input type="checkbox" />ME-210 </li>
+    <li><input type="checkbox" />CE-210</li>
+  </ul>
+</div>
+</div>
+
+
+
+
+                
               </div>
                  <button type="submit" className="btn1 btn-primary btn-block" data-bs-dismiss="modal">Sign Up</button>
              </form>

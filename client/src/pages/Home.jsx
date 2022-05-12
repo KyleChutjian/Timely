@@ -5,11 +5,12 @@ import HomeCss from '../pages/css/home.css';
 import useScript from '../hooks/useScript';
 import Joi from "joi-browser";
 import { login } from '../service/authService';
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
 function Home () {
- 
+  const navigator = useNavigate();
 
   const [LoginInfo, setLoginInfo] = useState({
     email: "",
@@ -23,6 +24,7 @@ function Home () {
     .then((res) => {
         //update the route
         console.log(JSON.stringify(res));
+        navigator("/dash");
     })
     .catch((err) => console.log(err));
 };

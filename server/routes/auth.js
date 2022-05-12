@@ -37,13 +37,13 @@ router.post("/login", async (req, res) => {
     const accessToken = jwt.sign(
       {
         id: user._id,
+        isProfessor: user.isProfessor,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "3d" }
     );
 
     const { password, ...others } = user._doc;
-    res.status(200).json({ ...others, accessToken });
+    res.status(200).send(accessToken );
   } catch (err) {
     res.status(500).json(err);
   }

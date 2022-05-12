@@ -14,6 +14,7 @@ const {
     verifyToken,
     verifyTokenAndAuthorization,
     verifyTokenAndAdmin,
+    verifyUser,
   } = require("./verifyToken");
 
 const Axios = require("axios");
@@ -42,6 +43,17 @@ router.post("/register", verifyToken, async (req, res) => {
         res.status(500).json(err);
     }
 })
+// Get a User by Id
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.status(200).json(user);
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 
 
 // Update a User by Id
@@ -140,7 +152,7 @@ router.delete("/testing/:userCourseId", verifyTokenAndAuthorization, async(req, 
 })
 
 // Get all Enrolled Courses by User
-router.get("/enroll/:userId", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/enroll/:userId", async (req, res) => {
     const courses = [];
     const userCoursesFilter = {userId: req.params.userId};
     const userCourses = await UserCourse.find(userCoursesFilter, {courseId: 1, _id: 0}).then((course) => {
@@ -164,7 +176,29 @@ router.post("/enroll/:userId/:courseId", verifyTokenAndAuthorization, async (req
     }).save();
     res.send(newUserCourse);
 })
+// Get all Courses
+router.get("/courses/frogs", async (req, res) => {
+    try {
+        const course = await Course.find();
+        res.status(200).json(course);
+    } catch (err) {
+        res.status(500).json(err);
+        
+    }
+});
 
-
+// Get all Entries
+router.get("/courses/:courseId/entry", async(req, res) => {
+    console.log(`Getting entries in the course with id ${req.params.courseId}`);
+    try {
+        const currentCourse = await Course.findById(req.params.courseId);
+        console.log(currentCourse.name);
+        const entries = currentCourse.entry;
+        console.log(entries);
+        res.status(200).json(entries);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 
 module.exports = router;

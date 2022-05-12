@@ -1,6 +1,7 @@
 import http from "./httpService";
-
+import { getJwt } from "./authService";
 const apiEndpoint = "http://localhost:5001/auth";
+const apiEndpointUser = "http://localhost:5001/user";
 
 export function login(data) {
     return http.post(`${apiEndpoint}/login`, data);
@@ -12,5 +13,26 @@ export function login(data) {
           password: user.password,
           isProfessor: false,
       });
+  }
+
+  //get user
+  export function getUserById(userId) {
+    http.setJwt(getJwt())
+    return http.get(`${apiEndpointUser}/${userId}`);
+  }
+  //get courses by user
+  export function getCourses(userId) {
+    http.setJwt(getJwt())
+    return http.get(`${apiEndpointUser}/enroll/${userId}`);
+  }
+  //get all courses
+  export function getAllCourses() {
+    http.setJwt(getJwt())
+    return http.get(`${apiEndpointUser}/courses/frogs`);
+  }
+  //get all courses
+  export function getAllLessons(courseId) {
+    http.setJwt(getJwt())
+    return http.get(`${apiEndpointUser}/courses/${courseId}/entry`);
   }
 

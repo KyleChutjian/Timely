@@ -59,15 +59,7 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-// Get all Courses
-router.get("/courses", async (req, res) => {
-    try {
-        const course = await Course.find();
-        res.status(200).json(course);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
+
 
 // Create a Course
 router.post("/courses/:facultyId", async (req, res) => {
@@ -235,6 +227,7 @@ router.post("/enroll/:userId/:courseId", async (req, res) => {
     }).save();
     res.send(newUserCourse);
 })
+
 
 
 

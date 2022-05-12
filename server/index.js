@@ -25,7 +25,7 @@ mongoose.connect("mongodb+srv://fawaks15:Wizard51!@ecommerce.nfjwb.mongodb.net/T
     useNewUrlParser: true,
 }
 );
-app.use("/",users);
+app.use("/user",users);
 app.use("/auth",auth);
 
 
