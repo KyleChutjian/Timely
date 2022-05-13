@@ -15,8 +15,10 @@ function StudentCourses () {
 const { state: course } = useLocation();
 const { state: user } = useLocation();
 const { state: courseId } = useLocation();
+const { state: professor } = useLocation();
 console.log(course[1]);
 
+// const [course, setCourse] = useState(props.course)
 const [courseName, setCourseName] = useState(course[0])
 const [lessonMins, setLessonMins] = useState(29)
 const [numLessons, setNumLessons] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
@@ -29,6 +31,15 @@ const onCreate = () => {
         handleClose()
 }
 
+const [entry, setEntry] = useState( {
+  lessonNum: "",
+  hwMin: "",
+  hwHour: "",
+  studyMin: "",
+  studyHour: "",
+  otherMin: "",
+  otherHour: ""
+})
 
 // NEED TO IMPLEMENT - called at close of modal
 const handleSubmit = () => {
@@ -43,7 +54,19 @@ const divStyle = {
   height: "100%"
 };
 
-
+/* Handle change of entry inputs
+function handleChange(e) {
+  const { name, value} = e.target
+  if (props.professor){
+    setCourse((prev) => {
+      return {...prev, [name] : value}
+    })
+  } else {
+    setEntry((prev) => {
+      return {...prev, [name] : value}
+    })
+  }
+}*/
 
 // Renders each card, from card 1 to the end of the array of lessons
 const renderCard = (card, index) => {
@@ -105,7 +128,7 @@ const renderCard = (card, index) => {
               <div className="row ">
                 <div className="col-6">
                   <label>Hours:</label>
-                  <input label="Hours:"type="number" pattern="[0-9]*" className="form-control" id="hoursSpent" placeholder="Hours Spent" required />
+                  <input label="Hours:"type="number" pattern="[0-9]*" className="form-control" id="hoursSpent" placeholder="Hours Spent" /*onChange={(e) => handleChange(e)}*/ required />
                   <div className="invalid-feedback">Enter a valid number in hours</div>
                 </div>
                 <div className="col-6">

@@ -17,11 +17,11 @@ export class CourseCard extends React.Component {
         return courseName;
       }
     render(){
-       
         const { courses } = this.props;
         const { professor } = this.props;
         const { user } = this.props;
         const {courseId} = this.props;
+        console.log("%%%%%%%%%%%%" + courseId)
 
 
         return (
@@ -34,13 +34,13 @@ export class CourseCard extends React.Component {
                             {/* <h5 className=" text-start mx-3">Logged Tasks: 40</h5> */}
 
                             {/* If professor, route to *********DATA PAGE!!!, (NEED TO CHANGE)****** */}
-                            {this.props.professor && <Link to="/dashStudent">
+                            {this.props.professor && <Link to="/data">
                             <button 
                              type="button" className="btn mb-3 my-1 btn-primary rounded button " style={{ width: '92%' }}>View Data</button>
                              </Link>}
 
                              {/* If user isn't a professor, route to course page where they can log data */}
-                             {!this.props.professor && <Link to="/dashStudent" state={[course,user,courseId]} >
+                             {!this.props.professor && <Link to="/dashStudent" state={[course,user,courseId, professor]} >
                             <button 
                              type="button" className="btn  mb-3  btn-primary rounded button" style={{ width: '92%' }} onClick={() => this.handleClick({course})}>View Course</button>
                              </Link>}

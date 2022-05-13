@@ -22,9 +22,12 @@ function DashboardComp () {
       const userId = getUser().id;
       // setIsProfessor(bool);
       
+      // check if user isProf or not
       setUserId(userId);
       if(bool == false){
         setIsProfessor(false);
+
+        // fetch courses
         const fetchCourses = async () => {
           const data = await getCourses(userId);
           const data2 = await getAllCourses();
@@ -34,7 +37,7 @@ function DashboardComp () {
           setCourses(data.data.map((course,index) => {
             return course.name;
           }));
-          console.log(data);
+          //console.log(data);
           setCourseId(data.data.map((course,index) => {
             console.log(course);
             return course._id;
@@ -53,7 +56,7 @@ function DashboardComp () {
           setCourses(data.data.map((course,index) => {
             return course.name;
           }));
-          console.log(data);
+          //console.log(data);
           setCourseId(data.data.map((course,index) => {
             console.log(course);
             return course._id;
