@@ -166,7 +166,7 @@ router.get("/enroll/:userId", async (req, res) => {
 });
 
 // Enroll in a Course
-router.post("/enroll/:userId/:courseId", verifyTokenAndAuthorization, async (req, res) => {
+router.post("/enroll/:userId/:courseId", async (req, res) => {
     const user = await User.findById(req.params.userId);
     // const newEntry = new Entry(req.body);
     // newEntry.userEmail = user.email;

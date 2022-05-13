@@ -30,9 +30,15 @@ export function login(data) {
     http.setJwt(getJwt())
     return http.get(`${apiEndpointUser}/courses/frogs`);
   }
-  //get all courses
+  //get all lessons within course
   export function getAllLessons(courseId) {
     http.setJwt(getJwt())
     return http.get(`${apiEndpointUser}/courses/${courseId}/entry`);
   }
+   //enroll user in a course
+   export function enrollInCourse(userId, courseId) {
+    http.setJwt(getJwt())
+    return http.post(`${apiEndpointUser}/enroll/${userId}/${courseId}`);
+  }
+
 

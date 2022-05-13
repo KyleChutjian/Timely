@@ -6,7 +6,7 @@ import Home from '../pages/css/home.css';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
-import { signup, getAllCourses} from '../service/userService';
+import { signup, getAllCourses, enrollInCourse} from '../service/userService';
 
 import { useNavigate } from "react-router-dom";
 
@@ -17,38 +17,29 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 
 function NavbarComp() {
-  // let coursesArray = [];
-  // const [courses, setCourses] = useState([]);
-  // const fetchCourses = async () => {
-  //   const data = await getAllCourses();
-  //   //console.log(data.data[0].name);
-    
-  //   // console.log(data.data[0].name);
-  //   for (const course in data.data) {
-  //     //console.log(data.data[course]);
-  //     coursesArray.push(data.data[course].name);
-      
-  //   }
-  //   return coursesArray.map((course,index) => {
-  //     return <li><input type="checkbox" checked="false"/> {coursesArray[index]}</li>
-  //   })
-  //   //console.log(coursesArray);
-    
-  //   //return coursesArray;
-  // }
-
+  
+  //create courses const
   const [courses, setCourses] = useState([]);
-
+  
+  //get courses and put them in setCourses
   useEffect(() => {
       getAllCourses().then((res) => {
         const data = res.data;
-        setCourses(data);
+        //create course array
+        let courseArray = [];
+        data.forEach((course) => {
+          //populate array of course names
+          courseArray.push(course);
+          
+        });
+        setCourses(courseArray);
       });
  
   }, []);
-  console.log(courses);
+  //console.log(courses);
 
 
+ 
 
 
 
@@ -78,6 +69,7 @@ function NavbarComp() {
           };
       })
   };
+  
   function handleSubmit(e) {
     e.preventDefault();
     console.log(account);
@@ -85,13 +77,41 @@ function NavbarComp() {
     .then((res) => {
       //update the route
       console.log(JSON.stringify(res));
+      console.log(res.data._id);
+      CourseIdArray.forEach((courseId) => {
+        enrollInCourse(res.data._id,courseId);
+      })
       navigator("/");
       handleClose();
   })
   
     .catch((err) => console.log(err));
 };
-
+//make array for courses that user wants to join
+const CourseIdArray = [];
+//add courses to user id
+function handleCourseChange (index) {
+  if(CourseIdArray.includes(index)){
+    CourseIdArray.splice(CourseIdArray.indexOf(index),1);
+    console.log(CourseIdArray);
+  }else{
+    CourseIdArray.push(index);
+    console.log(CourseIdArray);
+  }
+}
+// Renders each option, from course array
+const renderOptions = (courses, index) => {
+  return (
+    <div>
+    {/* <option value={courses.id}>{courses.name}</option> */}
+    
+    <input type="checkbox" className="btn-check" id={index} autocomplete="off" value={courses.id} onChange={()=>{
+      handleCourseChange(courses._id)
+    }}/>
+  <label className="btn btn-outline-primary mb-2" for={index}>{courses.name}</label>
+  </div>
+  );
+}
 
 
   return (
@@ -146,15 +166,13 @@ function NavbarComp() {
                   <div className="dropdown-check-list" tabIndex="100">
   <span className="anchor">Select Courses</span>
   <div id="list1">
-  <ul className="items">
-    <li><input type="checkbox" />SER-320 </li>
-    <li><input type="checkbox" />ENR-110</li>
-    <li><input type="checkbox" />SER-330 </li>
-    <li><input type="checkbox" />ENR-210 </li>
-    <li><input type="checkbox" />SER-210 </li>
-    <li><input type="checkbox" />ME-210 </li>
-    <li><input type="checkbox" />CE-210</li>
-  </ul>
+    {/* create the dropdown for joining courses */}
+ 
+
+<div className="btn-group-vertical" role="group" aria-label="Basic checkbox toggle button group">
+{courses.map(renderOptions)}
+</div>
+
 </div>
 </div>
 

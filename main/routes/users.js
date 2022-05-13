@@ -228,6 +228,25 @@ router.post("/enroll/:userId/:courseId", async (req, res) => {
     res.send(newUserCourse);
 })
 
+// Get Entries per Course per User
+router.get("/courses/:courseId/:userId/entry", async(req, res) => {
+    console.log(`Getting entries in the course with id ${req.params.courseId} and userid ${req.params.userId}`);
+    try {
+        const currentCourse = await Course.findById(req.params.courseId);
+        // console.log(currentCourse.name);
+        const entries = currentCourse.entry;
+        console.log(req.params.userId);
+        const userEntries = entries.filter(entry => entry.userId == req.params.userId);
+        console.log(userEntries);
+
+        
+
+        res.status(200).json(userEntries);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 
 
 
