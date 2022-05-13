@@ -1,8 +1,14 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { Button, Form, Modal} from 'react-bootstrap';
 import AddCourseModal from "./addCourseModal";
+import {createCourse} from "../service/userService";
+import {getUser} from "../service/authService";
 
 function CreateCourseCard(){
+    const userId = getUser().id;
+    const courseID = "ser-520";
+    console.log(userId);
+    // createCourse(userId,courseID);
 
     const [show, setShow] = useState(false);
 

@@ -69,7 +69,7 @@ function NavbarComp() {
           };
       })
   };
-  
+  //submit new user with courses selected
   function handleSubmit(e) {
     e.preventDefault();
     console.log(account);

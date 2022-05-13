@@ -1,10 +1,35 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { Button, Modal} from 'react-bootstrap';
-import { signup, getAllCourses, enrollInCourse} from '../service/userService';
+import { signup, getAllCourses, enrollInCourse,getCourses} from '../service/userService';
+import {getUser} from '../service/authService';
+
 
 function JoinCourseCard() {
     //create courses const
   const [courses, setCourses] = useState([]);
+  const [userId, setUserId] = useState();
+  //for user courses
+  const [userCourses, setUserCourses] = useState([]);
+
+  useEffect( () => {
+
+    //get the data from the api
+    const userId = getUser().id;
+    
+    setUserId(userId)
+      const fetchCourses = async () => {
+        const data = await getCourses(userId);
+        
+        setUserCourses(data);
+      }
+      fetchCourses();
+      console.log(userCourses);
+   
+
+
+
+  // //setIsProfessor(currentUser.isProfessor)
+}, []);
   
   //get courses and put them in setCourses
   useEffect(() => {
@@ -41,6 +66,23 @@ function handleCourseChange (index) {
     console.log(CourseIdArray);
   }
 }
+ //submit new user with courses selected
+ function handleSubmit(e) {
+  e.preventDefault();
+  getUser()
+  .then((res) => {
+    //update the route
+    console.log(JSON.stringify(res));
+    console.log(res.data._id);
+    CourseIdArray.forEach((courseId) => {
+      enrollInCourse(res.data._id,courseId);
+    })
+    
+    handleClose();
+})
+
+  .catch((err) => console.log(err));
+};
     // Renders each option, from course array
 const renderOptions = (courses, index) => {
     return (
@@ -73,7 +115,7 @@ const renderOptions = (courses, index) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                    <Button variant="primary" onClick={handleClose}>Join Course</Button>
+                    <Button variant="primary" onClick={handleSubmit}>Join Course</Button>
                 </Modal.Footer>
             </Modal>
         </div>

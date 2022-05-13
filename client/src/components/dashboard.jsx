@@ -11,8 +11,12 @@ function DashboardComp () {
   const [user, setUser] = useState();
   const [isProfessor, setIsProfessor] = useState();
   const [courses, setCourses] = useState([]);
+  const [courseId, setCourseId] = useState([]);
+  //get all courses by user Id and check if student or professor
   useEffect( () => {
 
+
+    
       //get the data from the api
       const bool = getUser().isProfessor;
       const userId = getUser().id;
@@ -30,11 +34,34 @@ function DashboardComp () {
           setCourses(data.data.map((course,index) => {
             return course.name;
           }));
+          console.log(data);
+          setCourseId(data.data.map((course,index) => {
+            console.log(course);
+            return course._id;
+          }));
         }
         fetchCourses();
         setUser("Student");
       }else{
-        setUser("Professor")
+        setIsProfessor(true);
+        const fetchCourses = async () => {
+          const data = await getCourses(userId);
+          const data2 = await getAllCourses();
+          //const dataAllCourses = await getCourses();
+          //console.log(dataAllCourses);
+          setCourses(data.data);
+          setCourses(data.data.map((course,index) => {
+            return course.name;
+          }));
+          console.log(data);
+          setCourseId(data.data.map((course,index) => {
+            console.log(course);
+            return course._id;
+          }));
+        }
+        fetchCourses();
+        
+        setUser("Professor");
       }
 
  
@@ -69,7 +96,7 @@ const divStyle = {
           <div className="container">
                 <div className="row">
                         <h1 className="Welcome text-start py-3">Welcome back, {user} <strong>!</strong></h1>
-                        <CourseCard courses = {courses} user = {userId} professor = {isProfessor}/>
+                        <CourseCard courses = {courses} user = {userId} professor = {isProfessor} courseId = {courseId}/>
                 </div>
             </div>
         </div>

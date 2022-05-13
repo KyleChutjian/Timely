@@ -11,7 +11,7 @@ export function login(data) {
       return http.post(`${apiEndpoint}/register`, {
           email: user.email,
           password: user.password,
-          isProfessor: false,
+          isProfessor: true,
       });
   }
 
@@ -40,5 +40,19 @@ export function login(data) {
     http.setJwt(getJwt())
     return http.post(`${apiEndpointUser}/enroll/${userId}/${courseId}`);
   }
+  //get all lessons within course by user
+  export function getAllLessonsByUser(courseId,userId) {
+    http.setJwt(getJwt())
+    return http.get(`${apiEndpointUser}/courses/${courseId}/${userId}/entry`);
+  }
+  //create a course
+  export function createCourse(userId,courseName) {
+    http.setJwt(getJwt())
+    return http.post(`${apiEndpointUser}/course/${userId}/${courseName}`);
+  }
+  
+
+
+
 
 

@@ -21,6 +21,7 @@ export class CourseCard extends React.Component {
         const { courses } = this.props;
         const { professor } = this.props;
         const { user } = this.props;
+        const {courseId} = this.props;
 
 
         return (
@@ -39,7 +40,7 @@ export class CourseCard extends React.Component {
                              </Link>}
 
                              {/* If user isn't a professor, route to course page where they can log data */}
-                             {!this.props.professor && <Link to="/dashStudent" state={[course,user]} >
+                             {!this.props.professor && <Link to="/dashStudent" state={[course,user,courseId]} >
                             <button 
                              type="button" className="btn  mb-3  btn-primary rounded button" style={{ width: '92%' }} onClick={() => this.handleClick({course})}>View Course</button>
                              </Link>}
@@ -52,7 +53,7 @@ export class CourseCard extends React.Component {
             else add join course card */}
             <div className="col">
                     {professor && <CreateCourseCard courses = {this.props.courses}/>}
-                    {!professor && <JoinCourseCard courses = {this.props.courses}/>}
+                    {/* {!professor && <JoinCourseCard courses = {this.props.courses}/>} */}
                 </div>
             </div>
         );

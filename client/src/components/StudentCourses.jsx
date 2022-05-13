@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Button, Form, Modal} from 'react-bootstrap';
 import { useLocation } from "react-router-dom";
-import {getAllLessons} from "../service/userService";
+import {getAllLessons, getAllLessonsByUser} from "../service/userService";
 import { Card } from "react-bootstrap";
 import CourseCard from "./courseCard";
 
@@ -14,7 +14,9 @@ function StudentCourses () {
   // do we need to log the time for other, assignments, studying?? that seems like a lot 
 const { state: course } = useLocation();
 const { state: user } = useLocation();
+const { state: courseId } = useLocation();
 console.log(course[1]);
+
 const [courseName, setCourseName] = useState(course[0])
 const [lessonMins, setLessonMins] = useState(29)
 const [numLessons, setNumLessons] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
@@ -26,6 +28,7 @@ const onClick = () => setShow(true);
 const onCreate = () => {
         handleClose()
 }
+
 
 // NEED TO IMPLEMENT - called at close of modal
 const handleSubmit = () => {

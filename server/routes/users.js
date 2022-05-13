@@ -88,7 +88,16 @@ router.get("/courses", verifyTokenAndAuthorization, async (req, res) => {
 
 // Create a Course
 router.post("/courses/:facultyId", verifyTokenAndAuthorization, async (req, res) => {
-    const newCourse = new Course(req.body);
+    const newCourse = new Course(
+        {
+            "courseId": 1,
+            "name": "520",
+            "numStudents": 6,
+            "numLessons": 40,
+            "courseCode": "XUNDEQ",
+            "facultyEmail": null
+        }
+    );
     const facultyUser = await User.findById(req.params.facultyId);
     newCourse.facultyId = facultyUser._id;
 
@@ -104,6 +113,8 @@ router.post("/courses/:facultyId", verifyTokenAndAuthorization, async (req, res)
         res.status(500).json(err);
     }
 });
+
+
 
 // Update a Course
 router.put("/courses/:courseId", verifyTokenAndAuthorization, async(req, res) => {
@@ -196,6 +207,25 @@ router.get("/courses/:courseId/entry", async(req, res) => {
         const entries = currentCourse.entry;
         console.log(entries);
         res.status(200).json(entries);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+// Get Entries per Course per User
+router.get("/courses/:courseId/:userId/entry", async(req, res) => {
+    console.log(`Getting entries in the course with id ${req.params.courseId} and userid ${req.params.userId}`);
+    try {
+        const currentCourse = await Course.findById(req.params.courseId);
+        // console.log(currentCourse.name);
+        const entries = currentCourse.entry;
+        console.log(req.params.userId);
+        const userEntries = entries.filter(entry => entry.userId == req.params.userId);
+        console.log(userEntries);
+
+        
+
+        res.status(200).json(userEntries);
     } catch (err) {
         res.status(500).json(err);
     }
